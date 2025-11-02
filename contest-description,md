@@ -131,3 +131,19 @@ Real infrastructure, not a toy example
 Cash prizes only – no revenue-sharing or complex terms
 
 This first-round contest aims to discover and reward talented algorithmic traders who can deliver profitable, production-ready strategies.
+
+
+ Deliverables:
+
+your-strategy-template/ folder containing:
+your_strategy.py – main strategy logic
+startup.py – bot entry point
+Dockerfile – container definition
+requirements.txt – dependencies
+README.md – documentation and parameter explanation
+
+Six-month backtest report (PnL, Sharpe ratio, drawdown)
+
+Clear explanation of your trading logic
+
+All submissions will be backtested in our automated environment under identical conditions.
