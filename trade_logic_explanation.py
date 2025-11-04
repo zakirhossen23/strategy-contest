@@ -1,7 +1,7 @@
-"""Trade logic explanation for the MA Crossover strategy.
+"""Trade logic explanation for the vol-momentum strategy.
 
 This module contains a concise, human-readable explanation of the
-trading logic used by `ma_crossover/ma_crossover.py`.
+volatility-targeted momentum strategy implemented in the submission.
 """
 
 def explanation() -> str:
@@ -13,13 +13,15 @@ def explanation() -> str:
     - Error modes: returns 'hold' when insufficient data or insufficient cash
     """
     return (
-        "MA Crossover Strategy: This strategy computes a short-period and a long-period "
-        "simple moving average (SMA) on the available price history. When the short SMA "
-        "crosses above the long SMA, the strategy issues a BUY signal to spend a fixed USD "
-        "amount (trade_amount). The buy size is calculated as notional / current_price. "
-        "When the short SMA crosses below the long SMA and there is an existing position, "
-        "the strategy issues a SELL signal for the entire held quantity. The strategy "
-        "returns 'hold' if history is insufficient, price is invalid, or no action is warranted."
+        "Volatility-targeted momentum (vol-momentum): The strategy uses a short and "
+        "long simple moving average (SMA) to generate entry/exit signals (classic MA "
+        "crossover). It sizes positions using a volatility-targeting rule: convert the "
+        "configured target annual volatility to a daily target and divide by the asset's "
+        "realized daily volatility to compute a position fraction of the portfolio. That "
+        "dollar exposure is capped by a configurable max_exposure and per-trade trade_amount. "
+        "Buys are executed in small increments while the short SMA > long SMA; sells close the "
+        "position when short SMA < long SMA. The strategy returns 'hold' when history is "
+        "insufficient or size would be zero."
     )
 
 

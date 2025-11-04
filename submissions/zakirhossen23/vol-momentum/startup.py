@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Submission startup for contest (placed in `your-strategy-template/`)."""
+"""Submission startup for contest (placed in `vol-momentum/`)."""
 
 from __future__ import annotations
 
@@ -17,9 +17,9 @@ from universal_bot import UniversalBot
 
 def main() -> None:
     config_path = sys.argv[1] if len(sys.argv) > 1 else None
-    os.environ.setdefault('BOT_STRATEGY', 'ma-crossover')
+    os.environ.setdefault('BOT_STRATEGY', 'vol-momentum')
     bot = UniversalBot(config_path)
-    print("🤖 Submission: MA Crossover")
+    print("🤖 Submission: vol-momentum (packaged)")
     bot.run()
 
 

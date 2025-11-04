@@ -20,6 +20,29 @@ What We Provide
 
 Base Infrastructure (provided):
 
+```markdown
+Trading Strategy Contest – Build the Most Profitable Bot
+
+$1,500 Total Prize Pool
+Winner: $1,000 USD | Runner-ups: 2nd Place: $300 USD, 3rd Place: $200 USD
+
+Please note that each participant is allowed a maximum of three submissions. Any additional entries will result in disqualification.
+
+Contest Overview
+
+We are launching the first official trading strategy contest for our SaaS trading platform.
+Your mission is simple: build a profitable trading strategy using our enterprise-grade infrastructure.
+We provide the complete bot framework – you develop the logic.
+
+Goal: Achieve the highest Profit & Loss (PnL) after backtesting.
+Testing Data: BTC-USD and ETH-USD historical data (Jan–Jun 2024).
+Starting Capital: $10,000 virtual for all participants.
+Evaluation Metric: Final portfolio value (highest PnL wins).
+
+What We Provide
+
+Base Infrastructure (provided):
+
 base-bot-template/ – universal trading bot framework
 strategy_interface.py – defines BaseStrategy and Signal classes
 exchange_interface.py – handles market data and execution simulation
@@ -33,7 +56,7 @@ dca-bot-template/ – a fully working reference strategy
 Demonstrates how to inherit and implement strategy logic
 Includes startup files, Dockerfile, and configuration examples
 
-You’ll build your own your-strategy-template/ following the same structure.
+You’ll build your own vol-momentum/ following the same structure.
 
 
 Your Task
@@ -42,11 +65,11 @@ Create a new strategy template that inherits from the BaseStrategy interface.
 
 Deliverables:
 
-1. Folder: your-strategy-template/
+1. Folder: vol-momentum/
 Must include exactly these files:
 
-your-strategy-template/
-├─ your_strategy.py
+vol-momentum/
+├─ vol-momentum.py
 ├─ startup.py
 ├─ Dockerfile
 ├─ requirements.txt
@@ -112,7 +135,7 @@ Getting Started
 
 Download the base-bot-template (provided upon registration).
 Review the dca-bot-template example to understand the structure.
-Build your own your-strategy-template/ with custom trading logic.
+Build your own vol-momentum/ with custom trading logic.
 Test locally using the provided backtesting tools.
 Submit your complete strategy package before the deadline.
 
@@ -131,3 +154,5 @@ Real infrastructure, not a toy example
 Cash prizes only – no revenue-sharing or complex terms
 
 This first-round contest aims to discover and reward talented algorithmic traders who can deliver profitable, production-ready strategies.
+
+``` 

@@ -1,5 +1,5 @@
-```markdown
 # Combined backtest — ensemble / single portfolio
+
 
 **Period:** 2024-01-01 — 2024-06-30
 **Starting capital:** $10,000
@@ -8,6 +8,7 @@
 **Sharpe ratio (annualised):** 0.940
 **Max drawdown:** 23.87%
 **Total trades executed:** 30
+
 
 ## Trade log (first 30 entries)
 | timestamp | symbol | side | size | price | gross | fee |
@@ -42,21 +43,3 @@
 | 2024-03-31T00:00:00+00:00 | BTC-USD | buy | 0.00718114 | $71324.54 | $512.19 | $0.51 |
 | 2024-04-01T00:00:00+00:00 | BTC-USD | buy | 0.00701371 | $69716.66 | $488.97 | $0.49 |
 | 2024-04-02T00:00:00+00:00 | BTC-USD | buy | 0.00205530 | $65496.87 | $134.62 | $0.13 |
-```
-
-
-## Symbol: BTC-USD
-**Final portfolio value:** $10024.66
-**Net PnL:** $24.66
-**Sharpe ratio (annualised):** 1.500
-**Max drawdown:** 0.13%
-**Total trades executed:** 10 (buys: 5, sells: 5)
-
-
-## Symbol: ETH-USD
-**Final portfolio value:** $10006.56
-**Net PnL:** $6.56
-**Sharpe ratio (annualised):** 0.458
-**Max drawdown:** 0.26%
-**Total trades executed:** 10 (buys: 5, sells: 5)
-

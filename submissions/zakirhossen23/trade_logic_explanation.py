@@ -13,13 +13,11 @@ def explanation() -> str:
     - Error modes: returns 'hold' when insufficient data or insufficient cash
     """
     return (
-        "MA Crossover Strategy: This strategy computes a short-period and a long-period "
-        "simple moving average (SMA) on the available price history. When the short SMA "
-        "crosses above the long SMA, the strategy issues a BUY signal to spend a fixed USD "
-        "amount (trade_amount). The buy size is calculated as notional / current_price. "
-        "When the short SMA crosses below the long SMA and there is an existing position, "
-        "the strategy issues a SELL signal for the entire held quantity. The strategy "
-        "returns 'hold' if history is insufficient, price is invalid, or no action is warranted."
+        "Volatility-targeted momentum: Uses MA crossover for entries/exits, but sizes positions "
+        "by realized volatility. It computes recent daily volatility, converts a target annual "
+        "volatility to a daily target, and sets pos_frac = target_daily / sigma_daily (clamped by max_exposure). "
+        "On buy signals the strategy deploys up to min(portfolio_cash * pos_frac, trade_amount) dollars in small increments; "
+        "on sell signals it fully liquidates. Simulation params: starting cash $10k, fee_pct=0.001, slippage_pct=0.0005, exec_delay_days=1."
     )
 
 
