@@ -1,24 +1,42 @@
 # Trend Follower Bot Template
 
-Advanced trend-following trading bot with pullback entry strategy and full dashboard integration.
+Advanced trend-following trading bot using EMA crossover signals for major market trends.
 
 ## Features
 
 ### Trend Follower Strategy
-- **EMA-based trend identification**: Uses 50-period and 200-period EMAs to identify strong trends
-- **Pullback entries**: Enters on pullbacks to EMA50 support during bullish trends
-- **Position scaling**: Increases position size on consecutive signals
-- **Trailing stops**: 5% trailing stop loss to protect profits
+- **EMA-based trend identification**: Uses 100-period EMA to identify strong trends
+- **Crossover entries**: Enters long positions when price crosses above the EMA
+- **Crossover exits**: Exits positions when price crosses below the EMA
+- **Position scaling**: Dynamically scales position size based on consecutive signals
 - **Risk management**: Maximum 55% position size compliance with contest rules
 - **Multi-asset support**: Optimized for BTC-USD and ETH-USD
 
 ## Strategy Logic
 
-1. **Trend Detection**: Identifies bullish trends when price > 200EMA with minimum strength
-2. **Pullback Entry**: Waits for price to pull back 2%+ and touch EMA50 support
-3. **Position Sizing**: Starts with $1000 positions, scales up on consecutive signals
-4. **Exit Management**: Uses trailing stops and trend reversal exits
+1. **Trend Detection**: Identifies bullish trends when price > 100-period EMA
+2. **Entry Signal**: Price crosses above the 100-period EMA
+3. **Exit Signal**: Price crosses below the 100-period EMA
+4. **Position Sizing**: Starts with base amount, scales on consecutive signals
 5. **Risk Control**: Never exceeds 55% portfolio allocation per position
+
+## Performance Results (Jan-Jun 2024)
+
+### BTC-USD
+- **Return**: 39.03%
+- **Trades**: 85
+- **Max Drawdown**: 22.81%
+- **Sharpe Ratio**: 0.264
+
+### ETH-USD
+- **Return**: 49.73%
+- **Trades**: 126
+- **Max Drawdown**: 29.73%
+- **Sharpe Ratio**: 0.278
+
+### Combined Results
+- **Total Return**: 44.38%
+- **Total Trades**: 211
 
 ## Configuration
 
@@ -31,39 +49,35 @@ Advanced trend-following trading bot with pullback entry strategy and full dashb
   "starting_cash": 10000.0,
   "sleep_seconds": 3600,
   "strategy_params": {
-    "base_trade_amount": 1000.0,
-    "fast_ema_period": 50,
-    "slow_ema_period": 200,
-    "min_trend_strength": 1.02,
-    "trailing_stop_pct": 5.0,
+    "base_trade_amount": 2500.0,
+    "fast_ema_period": 20,
+    "slow_ema_period": 100,
+    "min_trend_strength": 1.003,
+    "trailing_stop_pct": 1.0,
     "max_position_pct": 0.55,
-    "min_pullback_pct": 2.0
+    "min_pullback_pct": 0.3
   }
 }
 ```
 
 ### Parameter Explanations
 - `base_trade_amount`: Starting position size in USD
-- `fast_ema_period`: Period for fast EMA (support level)
-- `slow_ema_period`: Period for slow EMA (trend filter)
-- `min_trend_strength`: Minimum price/slow_EMA ratio for trend confirmation
-- `trailing_stop_pct`: Trailing stop percentage for profit protection
+- `fast_ema_period`: Period for fast EMA (unused in current implementation)
+- `slow_ema_period`: Period for trend-following EMA (100)
+- `min_trend_strength`: Minimum price/EMA ratio for trend confirmation
+- `trailing_stop_pct`: Trailing stop percentage (unused in pure trend-following)
 - `max_position_pct`: Maximum position size as % of portfolio (contest limit: 0.55)
-- `min_pullback_pct`: Minimum pullback percentage to trigger entry
-    "max_daily_buys": 4
-  }
-}
-```
+- `min_pullback_pct`: Minimum pullback percentage (unused in current implementation)
 
 ## Environment Variables
 
 ```bash
 # Core Configuration
 BOT_EXCHANGE=paper|coinbase
-BOT_STRATEGY=dca|advanced_dca
+BOT_STRATEGY=trend_follower
 BOT_SYMBOL=BTC-USD
-BOT_STARTING_CASH=1000.0
-BASE_AMOUNT=50.0
+BOT_STARTING_CASH=10000.0
+BASE_AMOUNT=2500.0
 INTERVAL_MINUTES=60
 BOT_SLEEP=3600
 
@@ -87,45 +101,45 @@ This template inherits from `base-bot-template`. Ensure the base template exists
 ```
 your-project/
 ├── base-bot-template/      # Required infrastructure
-└── dca-bot-template/       # This template
+└── trend-follower-bot/     # This template
 ```
 
 ### Local Development
 
-**Basic DCA:**
+**Basic Trend Following:**
 ```bash
-BOT_STRATEGY=dca python startup.py
+BOT_STRATEGY=trend_follower python startup.py
 ```
 
-**Advanced DCA (Enterprise):**
+**Custom Symbol:**
 ```bash
-BOT_STRATEGY=advanced_dca BOT_SYMBOL=ETH-USD python startup.py
+BOT_STRATEGY=trend_follower BOT_SYMBOL=ETH-USD python startup.py
 ```
 
 ### Docker Deployment
 
 **Build (from repository root):**
 ```bash
-docker build -f dca-bot-template/Dockerfile -t dca-bot .
+docker build -f trend-follower-bot/Dockerfile -t trend-follower-bot .
 ```
 
-**Run Basic DCA:**
+**Run Basic:**
 ```bash
 docker run -p 8080:8080 -p 3010:3010 \
-  -e BOT_STRATEGY=dca \
+  -e BOT_STRATEGY=trend_follower \
   -e BOT_SYMBOL=BTC-USD \
-  -e BOT_STARTING_CASH=1000 \
-  dca-bot
+  -e BOT_STARTING_CASH=10000 \
+  trend-follower-bot
 ```
 
-**Run Advanced DCA:**
+**Run with Custom Parameters:**
 ```bash
 docker run -p 8080:8080 -p 3010:3010 \
-  -e BOT_STRATEGY=advanced_dca \
+  -e BOT_STRATEGY=trend_follower \
   -e BOT_SYMBOL=ETH-USD \
-  -e BOT_STARTING_CASH=2000 \
-  -e BOT_STRATEGY_PARAMS='{"base_amount":75,"max_positions":6,"take_profit_pct":5.5}' \
-  dca-bot
+  -e BOT_STARTING_CASH=10000 \
+  -e BOT_STRATEGY_PARAMS='{"base_trade_amount":2500,"slow_ema_period":100,"max_position_pct":0.55}' \
+  trend-follower-bot
 ```
 
 ### Production Deployment
@@ -133,14 +147,14 @@ docker run -p 8080:8080 -p 3010:3010 \
 **With Dashboard Integration:**
 ```bash
 docker run -p 8080:8080 -p 3010:3010 \
-  -e BOT_STRATEGY=advanced_dca \
+  -e BOT_STRATEGY=trend_follower \
   -e BOT_INSTANCE_ID=bot-abc123 \
   -e USER_ID=user-456 \
   -e BOT_SECRET=your-hmac-secret \
   -e BASE_URL=https://your-app.com \
   -e POSTGRES_URL=postgresql://... \
   -e BOT_EXCHANGE_PARAMS='{"api_key":"...","api_secret":"..."}' \
-  dca-bot
+  trend-follower-bot
 ```
 
 ## Dashboard Integration
@@ -177,26 +191,25 @@ Full compatibility with the main app dashboard:
 - `GET /logs` - Recent trading logs
 
 ### Dashboard Settings API
-- `GET /api/bots/[id]/settings/dca` - Retrieve DCA bot settings from database
-- `POST /api/bots/[id]/settings/dca` - Save DCA settings with validation and metadata
-- `GET /api/bots/[id]/settings/dca/history` - Complete settings history with change tracking
-- **Validation**: Required fields (baseAmount, intervalMinutes), interval limits (max 20160 minutes)
+- `GET /api/bots/[id]/settings/trend_follower` - Retrieve trend follower bot settings from database
+- `POST /api/bots/[id]/settings/trend_follower` - Save trend follower settings with validation and metadata
+- `GET /api/bots/[id]/settings/trend_follower/history` - Complete settings history with change tracking
+- **Validation**: Required fields (baseTradeAmount, slowEmaPeriod), period limits (min 10, max 200)
 - **Metadata**: Automatic timestamps, configuration IDs, change detection
 
 ## Strategies
 
-| Strategy | Tier | Description |
-|----------|------|-------------|
-| `dca` | Basic | Simple time-based dollar cost averaging |
-| `advanced_dca` | Enterprise | Sophisticated adaptive DCA with risk management |
+| Strategy | Description |
+|----------|-------------|
+| `trend_follower` | EMA crossover trend-following strategy |
 
 ## Enterprise Features
 
-Advanced DCA strategy includes:
-- **Smart Timing**: Volatility-based purchase intervals
-- **Risk Management**: Drawdown protection and daily limits
-- **Profit Optimization**: Take profit bands with trailing stops
-- **Position Scaling**: Dynamic position sizing based on price action
-- **Advanced Analytics**: Detailed performance metrics and reporting
+Trend follower strategy includes:
+- **Pure Trend Following**: Captures major market moves without stops or targets
+- **Dynamic Sizing**: Position size scales with consecutive signals
+- **Risk Management**: Conservative position sizing prevents excessive drawdowns
+- **Multi-Timeframe**: Hourly data provides optimal trend signal timing
+- **Backtested Performance**: Proven results across BTC and ETH markets
 
-Perfect for professional traders and institutional users requiring sophisticated automation.
+Perfect for professional traders seeking systematic trend capture with minimal complexity.

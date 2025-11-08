@@ -1,9 +1,9 @@
-# DCA Bot Template - Dockerfile
+# Trend Follower Bot Template - Dockerfile
 FROM python:3.11-slim
 
-LABEL description="DCA Trading Bot with Dashboard Integration"
-LABEL strategies="dca,advanced_dca"
-LABEL tier="basic,enterprise"
+LABEL description="Trend Follower Trading Bot with Dashboard Integration"
+LABEL strategies="trend_follower"
+LABEL tier="basic"
 
 # Set working directory
 WORKDIR /app
@@ -11,8 +11,8 @@ WORKDIR /app
 # Copy base bot infrastructure
 COPY base-bot-template/ /app/base/
 
-# Copy DCA-specific files
-COPY dca-bot-template/ /app/
+# Copy trend follower-specific files
+COPY trend-follower/ /app/
 
 # Install dependencies
 RUN pip install --no-cache-dir -r /app/base/requirements.txt
@@ -29,10 +29,10 @@ EXPOSE 8080 3010
 
 # Default environment
 ENV BOT_EXCHANGE=paper
-ENV BOT_STRATEGY=dca
+ENV BOT_STRATEGY=trend_follower
 ENV BOT_SYMBOL=BTC-USD
-ENV BOT_STARTING_CASH=1000.0
-ENV BOT_SLEEP=60
+ENV BOT_STARTING_CASH=10000.0
+ENV BOT_SLEEP=3600
 
-# Start the DCA bot
+# Start the trend follower bot
 CMD ["python", "/app/startup.py"]

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""DCA Bot Template - Dollar Cost Averaging Trading Bot with Dashboard Integration."""
+"""Trend Follower Bot Template - EMA Crossover Trend Following Trading Bot with Dashboard Integration."""
 
 from __future__ import annotations
 
@@ -16,14 +16,14 @@ if not os.path.exists(base_path):
 sys.path.insert(0, base_path)
 
 # Import trend follower strategies
-import trend_follower_strategy  # This registers the trend follower strategies
+import trend_follower  # This registers the trend follower strategies
 
 # Import base bot infrastructure
 from universal_bot import UniversalBot
 
 
 def main() -> None:
-    """Main entry point for DCA Bot."""
+    """Main entry point for Trend Follower Bot."""
     config_path = sys.argv[1] if len(sys.argv) > 1 else None
 
     bot = UniversalBot(config_path)

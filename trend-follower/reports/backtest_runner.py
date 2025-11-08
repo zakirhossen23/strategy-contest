@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Contest-compliant backtest runner for vol-momentum strategy using Yahoo Finance data."""
+"""Contest-compliant backtest runner for trend follower strategy using Yahoo Finance data."""
 
 import sys
 import os
@@ -10,10 +10,11 @@ import yfinance as yf
 import numpy as np
 
 # Add paths
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'vol-momentum'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..', 'base-bot-template'))
 
 # Import strategy
-import trend_follower_strategy
+import trend_follower
 
 def download_data(symbol, start_date, end_date):
     """Download historical data from Yahoo Finance."""
@@ -37,7 +38,7 @@ def simulate_trading(df, config, starting_capital=10000.0):
     portfolio_values = []
     
     # Strategy instance
-    from trend_follower_strategy import TrendFollowerStrategy
+    from trend_follower import TrendFollowerStrategy
     from exchange_interface import PaperExchange
     
     exchange = PaperExchange()
